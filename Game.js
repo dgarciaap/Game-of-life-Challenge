@@ -1,27 +1,34 @@
-const Cell = require ('./Cell.js');
+const Board = require ('./Board.js');
 
-class Game {
-    //function for creating the customed board
-    createBoard(cols, rows) {
-        let board = new Array(cols);
-        for (let i = 0; i < board.length; i++) {
-          board[i] = new Array(rows);
-        }
-        return board;
-    }
+class Game{
+  constructor(){
+    this.playing = false;
+    this.cols = null;
+    this.rows = null;
+  }
 
-    //Fills board with dead or alive cells
-    fillBoard(board) {
-        for(let i = 0; i < board.length; i++) {
-            for(let j = 0; j < board.length; j++) {
-                board[i][j] = new Cell(i,j);
-            }
-        }
-        return board;
+  //Clicking start button
+  start(cols, rows){
+    //starts playing mode = true, num of cols and num rows
+    this.playing = true;
+    this.cols = cols;
+    this.rows = rows;
+
+    //Create a new empty board
+    let board = new Board(this.cols, this.rows);
+   
+    board.fillBoard();
+
+    //while playing == true creates new boards
+    while(this.playing){
+      let newBoard = new Board;
+      newBoard = board.createNextGen(newBoard);
+      board = newBoard;
     }
+  }
+
+  //stop game
+  stop(){
+    this.playing = false;
+  }
 }
-
-let juego = new Game();
-let tabla = juego.createBoard(5,5);
-console.log(juego.fillBoard(tabla));
-// console.log(juego.createBoard(5,5));
