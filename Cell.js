@@ -15,16 +15,14 @@ class Cell {
         //It goes through the only 8 neighbors that the cell has (see it as a 3x3 matrix)
         for(let i = -1; i < 2; i++) {
             for(let j = -1; j < 2; j++) {
-                //if position is different than the one of current cell
-                if( i != 0 && j != 0) {
-                    //We deal with the edges here (see it as a cylinder)
-                    let col = (x + i + cols) % cols;
-                    let row = (y + j + rows) % rows;
-                    //sums the state of that position (0 or 1)
-                    total += board[col][row].getState(); 
-                }
+            //We deal with the edges here (see it as a cylinder)
+            let col = (x + i + cols) % cols;
+            let row = (y + j + rows) % rows;
+            //sums the state of that position (0 or 1)
+            total += board[col][row]; 
             }
         }
+        total -= board[x][y];
         return total;
     }
 
